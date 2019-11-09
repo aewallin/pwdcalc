@@ -47,3 +47,16 @@ find_package(OpenMP)
 if(OpenMP_CXX_FOUND)
     target_link_libraries(pwdcalc PUBLIC OpenMP::OpenMP_CXX)
 endif()
+
+# this figures out where to install the Python modules
+execute_process(
+    COMMAND python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())"
+    OUTPUT_VARIABLE Python_site_packages
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+MESSAGE(STATUS "Python libraries will be installed to: " ${Python_site_packages})
+install(
+    TARGETS pwdcalc
+    LIBRARY 
+    DESTINATION ${Python_site_packages}
+)
