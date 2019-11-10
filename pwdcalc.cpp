@@ -20,9 +20,9 @@ public:
         
         _input_size = input.shape(0);
         //int* input_ptr = reinterpret_cast<int*>(input.get_data());
-        _input = new std::vector<int>(_input_size);
+        _input = new std::vector<long int>(_input_size);
         for (int i = 0; i < _input_size; ++i)
-            (*_input)[i] = bp::extract<int>(input[i]); //*(input_ptr + i);
+            (*_input)[i] = bp::extract<long int>(input[i]); //*(input_ptr + i);
         //std::cout << "input.size() = " << _input->size() << " ";
         //std::cout << "(" << _input->at(0) << ", " << _input->at(1) << ", " << _input->at(2) << " " << _input->at(3) << ", ... )\n";
         
@@ -44,7 +44,7 @@ public:
 
             for (int j = i+1; j< _input_size; ++j) //stop-element
             {
-                int distance = _input->at(j) - _input->at(i);
+                long int distance = _input->at(j) - _input->at(i);
                 int bin = int( floor( float(distance)/float(_binwidth) ) )-1;
                 if (bin < _nbins && 0 <= bin ) {
                     output[bin] += 1;
@@ -72,7 +72,7 @@ private:
     int _nbins;
     int _binwidth;
     int _input_size;
-    std::vector<int>* _input;
+    std::vector<long int>* _input;
 
     
 };
